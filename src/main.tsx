@@ -4,11 +4,20 @@ import App from './App.tsx'
 import './index.css'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import Login from './pages/Login/Login.tsx'
+import Register from './pages/Register/Register.tsx'
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: '',
     element: <Login/>
+  },
+  {
+    path: 'login',
+    element: <Login/>
+  },
+  {
+    path: 'register',
+    element: <Register/>
   },
   {
     path: 'home',
