@@ -1,11 +1,10 @@
 import { useState } from "react"
+import Header from "../Header/Header"
+import Menu from "../Menu/Menu"
 
 export default function SalesList() {
 
-    const [sales, setSales] = useState([{}])
-
-    // chamada da API
-    let list = [
+    const [sales, setSales] = useState([
         {
             products: [
                 {name: "Impressão", quantity: 3, price: 0.5},
@@ -23,30 +22,28 @@ export default function SalesList() {
             date: Date(),
             paymentMethod: {id: 2, description: "Débito"}
         }
-    ]
+    ])
 
-    setSales(list)
+    // setSales(list)
 
     return (
-        <div className="p-2">
-            {sales.map(sale => (
+        <>
+            <Header/>
+            <Menu/>
+            <div className="p-2">
+                {sales.map(sale => (
+                    <div className="p-2 m-2 row card">
+                        <b>R$ {sale.totalPrice.toFixed(2)} ({sale.paymentMethod.description}) </b>
 
-                <div className="p-2">
-                    <b className="mr-2">
-                        {sale.totalPrice}
-                    </b>
-
-                    <span className="mr-2">
                         {sale.products.map(product => (
-
-                            <span>{product.quantity} - {product.name}, </span>
-
+                            <span>
+                                {product.quantity} - {product.name}
+                            </span>
                         ))}
-                    </span>
-                </div>
-
-            ))}
-        </div>
+                    </div>
+                ))}
+            </div>
+        </>
     )
 
 }

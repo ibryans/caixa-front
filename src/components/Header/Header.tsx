@@ -1,21 +1,14 @@
-import reactLogo from '../../assets/react.svg'
-import viteLogo from '/vite.svg'
 import './Header.css'
 
 function Header(props: any) {
 	return (
-		<>
-			<div>
-				<a href="https://vitejs.dev" target="_blank">
-					<img src={viteLogo} className="logo" alt="Vite logo" />
-				</a>
-				<a href="https://react.dev" target="_blank">
-					<img src={reactLogo} className="logo react" alt="React logo" />
-				</a>
+		<nav className="navbar sticky-top bg-success text-center">
+			<div className="container-fluid d-flex justify-content-center">
+				<b className="navbar-brand text-white text-center">
+					Caixa
+				</b>
 			</div>
-
-			<h1>{props.titulo}</h1>
-		</>
+		</nav>
 	)
 }
 
