@@ -27,9 +27,12 @@ export default function Login() {
 
     return (
         <div className="container">
-            <div className="row h-100 align-items-center">
-                <div className="col-6 offset-3">
-                    <h1>Login</h1>
+            <div className="vh-100 d-flex justify-content-center align-items-center">
+                <div className="card text-center p-5">
+
+                    <h1 className="mb-5 text-center">
+                        <b>Sistema de Caixa</b>
+                    </h1>
                     
                     <form onSubmit={submit}>
 
@@ -42,7 +45,7 @@ export default function Login() {
                                 placeholder="E-mail"/>
                         </div>
                         
-                        <div className="pt-2 pb-1">
+                        <div className="pt-2 pb-4">
                             <input
                                 onChange={changeForm}
                                 name="password"
@@ -55,12 +58,28 @@ export default function Login() {
                             <button 
                                 type="submit"
                                 className="btn btn-outline-primary btn-block">
-                                Enviar
+                                Entrar
                             </button>
                         </div>
                         
                     </form>
+
+                    <a href="/register" className="form-text pt-2 mb-4">
+                        Esqueceu sua senha?
+                    </a>
+
+                    <div className="card-footer pt-2 p-0">
+                        <a href="/register" className="text-decoration-none">
+                            <div className="mt-3 d-grid gap-2">
+                                <button     
+                                    className="btn btn-outline-success btn-block">
+                                    Fazer Cadastro
+                                </button>
+                            </div>
+                        </a>
+                    </div>
                 </div>
+
             </div>
         </div>
     )

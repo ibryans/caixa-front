@@ -29,9 +29,11 @@ export default function Register() {
 
     return (
         <div className="container">
-            <div className="row h-100 align-items-center">
-                <div className="col-6 offset-3">
-                    <h1>Cadastro</h1>
+            <div className="vh-100 d-flex align-items-center justify-content-center">
+                <div className="card text-center p-5">
+                    <h1 className="mb-5">
+                        <b>Sistema de Caixa</b>
+                    </h1>
                     
                     <form onSubmit={submit}>
 
@@ -71,7 +73,7 @@ export default function Register() {
                                 placeholder="E-mail"/>
                         </div>
                         
-                        <div className="pt-2 pb-1">
+                        <div className="pt-2 mb-4">
                             <input
                                 onChange={changeForm}
                                 name="password"
@@ -80,15 +82,29 @@ export default function Register() {
                                 placeholder="Senha"/>
                         </div>
 
-                        <div className="d-grid gap-2">
+                        <div className="d-grid gap-2 mb-5">
                             <button 
                                 type="submit"
                                 className="btn btn-outline-primary btn-block">
-                                Enviar
+                                Fazer Cadastro
                             </button>
                         </div>
                         
                     </form>
+
+                    <div className="card-footer pt-3 p-0">
+                        <span className="form-text pt-2 mb-4">
+                            Já possui um cadastro?
+                        </span>
+                        <a href="/login" className="text-decoration-none">
+                            <div className="mt-3 d-grid gap-2">
+                                <button     
+                                    className="btn btn-outline-success btn-block">
+                                    Entrar
+                                </button>
+                            </div>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
