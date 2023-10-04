@@ -1,30 +1,19 @@
-import { useLocation } from "react-router-dom"
-
 export default function Menu() {
 
-    const location = useLocation()
-    const path = location.pathname
-
-    const items = [
-        {name: 'sales', description: 'Vendas'},
-        {name: 'sales', description: 'Fiados'},
-        {name: 'sales', description: 'Vendas'},
-    ]
-
     return (
-        <ul className="nav nav-pills p-3">
+        <ul className="nav nav-underline justify-content-center mt-4">
             <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="#sales">
+                <a className="nav-link active" data-bs-toggle="tab" href="#sales">
                     Vendas
                 </a>
             </li>
             <li className="nav-item">
-                <a className="nav-link" href="#">
+                <a className="nav-link" data-bs-toggle="tab" href="#topay">
                     Fiados
                 </a>
             </li>
             <li className="nav-item">
-                <a className="nav-link" href="#">
+                <a className="nav-link" data-bs-toggle="tab" href="#">
                     Teste
                 </a>
             </li>

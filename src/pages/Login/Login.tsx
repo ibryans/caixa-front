@@ -57,7 +57,7 @@ export default function Login() {
                         <div className="d-grid gap-2">
                             <button 
                                 type="submit"
-                                className="btn btn-outline-primary btn-block">
+                                className="btn btn-outline-success btn-block">
                                 Entrar
                             </button>
                         </div>
@@ -72,7 +72,7 @@ export default function Login() {
                         <a href="/register" className="text-decoration-none">
                             <div className="mt-3 d-grid gap-2">
                                 <button     
-                                    className="btn btn-outline-success btn-block">
+                                    className="btn btn-outline-primary btn-block">
                                     Fazer Cadastro
                                 </button>
                             </div>

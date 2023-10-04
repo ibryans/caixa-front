@@ -1,12 +1,12 @@
 import './Header.css'
 
-function Header(props: any) {
+function Header() {
 	return (
-		<nav className="navbar sticky-top bg-success text-center">
-			<div className="container-fluid d-flex justify-content-center">
-				<b className="navbar-brand text-white text-center">
-					Caixa
-				</b>
+		<nav className="navbar bg-white text-center">
+			<div className="container-fluid d-flex p-4 pt-4 pb-2 justify-content-center">
+				<h3 className="">
+					Controle de Caixa
+				</h3>
 			</div>
 		</nav>
 	)
