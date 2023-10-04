@@ -9,20 +9,16 @@ export default function Home() {
         <>
             <Header/>
 
-            <div className="col-6 offset-3">
+            <div className="col-md-6 col-sm-12 offset-md-3">
 
                 <Menu/>
 
                 <div className="tab-content">
                     <div className="tab-pane container active" id="sales">
-                        
                         <SalesList/>
-
                     </div>
                     <div className="tab-pane container" id="topay">
-
                         <ToPayList/>
-
                     </div>
                 </div>
 
