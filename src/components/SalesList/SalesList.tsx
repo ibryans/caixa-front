@@ -21,6 +21,15 @@ export default function SalesList() {
             totalPrice: 0.5,
             date: Date(),
             paymentMethod: {id: 2, description: "Cartão de Débito"}
+        },
+        {
+            id: 3,
+            products: [
+                {id: 67, name: "Chip Claro", quantity: 1, price: 15},
+            ],
+            totalPrice: 15,
+            date: Date(),
+            paymentMethod: {id: 4, description: "Pix"}
         }
     ])
 

@@ -31,7 +31,7 @@ export default function Login() {
                 <div className="card text-center p-5">
 
                     <h1 className="mb-5 text-center">
-                        <b>Sistema de Caixa</b>
+                        <b>Controle de Caixa</b>
                     </h1>
                     
                     <form onSubmit={submit}>

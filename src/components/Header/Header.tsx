@@ -1,12 +1,34 @@
 import './Header.css'
+import accountLogo from '../../assets/papelaria.jpeg'
+import { useState } from 'react'
+
 
 function Header() {
+
+	const [user, setUser] = useState({
+		name: 'Papelaria R.A Tech',
+		img: accountLogo
+	})
+
 	return (
-		<nav className="navbar bg-white text-center">
-			<div className="container-fluid d-flex p-4 pt-4 pb-2 justify-content-center">
-				<h3 className="">
+		<nav className="navbar bg-primary">
+			<div className="col-6 offset-3 p-4 pt-3 pb-2 d-flex justify-content-between align-items-center text-white">
+				<h4 className="d-flex justify-content-start">
 					Controle de Caixa
-				</h3>
+				</h4>
+				<div className='nav-item dropdown'>
+					<a href="#" className="nav-link dropdown-toggle user-action p-1" role='button' data-bs-toggle="dropdown" aria-expanded="false">
+						<img src={user.img} className="avatar" />
+						{user.name}
+					</a>
+					<ul className="dropdown-menu dropdown-menu-dark">
+						<li><a className="dropdown-item" href="#">Perfil</a></li>
+						<li><a className="dropdown-item" href="#">Produtos</a></li>
+						<li><a className="dropdown-item" href="#">Configurações</a></li>
+						<li><hr className="dropdown-divider"/></li>
+						<li><a className="dropdown-item" href="#">Sair</a></li>
+					</ul>
+				</div>
 			</div>
 		</nav>
 	)
