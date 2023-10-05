@@ -14,7 +14,7 @@ export default function Menu() {
             </li>
             <li className="nav-item">
                 <a className="nav-link" data-bs-toggle="tab" href="#">
-                    Teste
+                    Gastos
                 </a>
             </li>
         </ul>

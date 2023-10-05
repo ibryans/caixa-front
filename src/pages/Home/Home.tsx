@@ -1,3 +1,4 @@
+import AddSale from "../../components/AddSale/AddSale"
 import Header from "../../components/Header/Header"
 import Menu from "../../components/Menu/Menu"
 import SalesList from "../../components/SalesList/SalesList"
@@ -15,6 +16,7 @@ export default function Home() {
 
                 <div className="tab-content">
                     <div className="tab-pane container active" id="sales">
+                        <AddSale/>
                         <SalesList/>
                     </div>
                     <div className="tab-pane container" id="topay">

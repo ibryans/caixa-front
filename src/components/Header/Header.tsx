@@ -21,7 +21,7 @@ function Header() {
 						<img src={user.img} className="avatar" />
 						<span className=''>{user.name}</span>
 					</a>
-					<ul className="dropdown-menu dropdown-menu-dark">
+					<ul className="dropdown-menu">
 						<li><a className="dropdown-item" href="#">Perfil</a></li>
 						<li><a className="dropdown-item" href="#">Produtos</a></li>
 						<li><a className="dropdown-item" href="#">Configurações</a></li>
