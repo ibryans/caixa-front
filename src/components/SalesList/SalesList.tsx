@@ -5,31 +5,24 @@ export default function SalesList() {
     const [sales, setSales] = useState([
         {
             id: 1,
-            products: [
-                {id: 12, name: "Impressão", quantity: 3, price: 0.5},
-                {id: 34, name: "Envelope", quantity: 1, price: 1}
-            ],
+            description: 'Impressão',
             totalPrice: 2.5,
             date: Date(),
-            paymentMethod: {id: 1, description: "Dinheiro"}
+            paymentMethod: "Dinheiro"
         },
         {
             id: 2,
-            products: [
-                {id: 12, name: "Impressão", quantity: 1, price: 0.5},
-            ],
+            description: '',
             totalPrice: 0.5,
             date: Date(),
-            paymentMethod: {id: 2, description: "Cartão de Débito"}
+            paymentMethod: "Cartão de Débito"
         },
         {
             id: 3,
-            products: [
-                {id: 67, name: "Chip Claro", quantity: 1, price: 15},
-            ],
+            description: '',
             totalPrice: 15,
             date: Date(),
-            paymentMethod: {id: 4, description: "Pix"}
+            paymentMethod: "Pix"
         }
     ])
 
@@ -47,15 +40,10 @@ export default function SalesList() {
                             </a>
                         </h5>
                         <h6 className="card-subtitle text-secondary">
-                            {sale.paymentMethod.description}
+                            {sale.paymentMethod}
                         </h6>
                         <p className="card-text mt-2 collapse" id={`sale-${sale.id}-itens`}>
-                            {sale.products.map((product) => (
-                                <span key={`sale-${sale.id}-product-${product.id}`}>
-                                    <span> {product.quantity}x {product.name} </span>
-                                    <br/>
-                                </span>
-                            ))}
+                            <span> {sale.description} </span>
                         </p>
                     </div>
                 </div>

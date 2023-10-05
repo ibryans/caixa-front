@@ -1,9 +1,10 @@
 import { useState } from "react"
+import { CurrencyInput } from "react-currency-mask"
 
 export default function AddSale() {
 
     const [form, setForm] = useState({
-        value: 0,
+        totalPrice: 0,
         paymentMethod: '',
         description: ''
     })
@@ -27,14 +28,20 @@ export default function AddSale() {
                 <div className="col-12 mb-3">
                     <h5>Nova venda</h5>
                 </div>
-                <div className="col">
-                    <input
-                        onChange={changeForm}
-                        name="value"
-                        type="number" 
-                        className="form-control" 
-                        placeholder="Valor" 
-                        aria-label="Valor"/>
+                <div className="input-group col">
+                    <span className="input-group-text" id="basic-addon1">R$</span>
+
+                    <CurrencyInput
+                        onChangeValue={(_, original) =>{
+                            setForm((prevForm) => ({
+                                ...prevForm,
+                                totalPrice: original
+                             }))
+                        }}
+                        hideSymbol={true}
+                        InputElement={ <input className="form-control" placeholder="Valor"/> }
+                    />
+                    
                 </div>
                 <div className="col">
                     <select
@@ -59,7 +66,7 @@ export default function AddSale() {
                         aria-label="Descriçao"/>
                 </div>
             </form>
-            <div className="d-grid p-3">
+            <div className="d-grid gap-2 p-3">
                 <button onClick={submit} className="btn btn-primary" type="button">
                     <i className="bi bi-plus-circle p-2"></i>
                     Adicionar
