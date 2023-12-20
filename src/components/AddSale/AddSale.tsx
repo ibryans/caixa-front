@@ -29,7 +29,9 @@ export default function AddSale() {
                     <h5>Nova venda</h5>
                 </div>
                 <div className="input-group col">
-                    <span className="input-group-text" id="basic-addon1">R$</span>
+                    <span className="input-group-text" id="basic-addon1">
+                        R$
+                    </span>
 
                     <CurrencyInput
                         onChangeValue={(_, original) =>{
@@ -41,7 +43,6 @@ export default function AddSale() {
                         hideSymbol={true}
                         InputElement={ <input className="form-control" placeholder="Valor"/> }
                     />
-                    
                 </div>
                 <div className="col">
                     <select
