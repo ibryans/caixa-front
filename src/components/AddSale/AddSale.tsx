@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { CurrencyInput } from "react-currency-mask"
+import Sale from "../../models/Sale"
 
 export default function AddSale() {
 
@@ -17,9 +18,27 @@ export default function AddSale() {
         }))
     }
 
+    const addSale = async (value: Sale) => {
+        await fetch('',{
+            method: 'POST',
+            body: JSON.stringify(value),
+            headers: {
+                // adicionar o id do usuário, talvez, pra authentication
+            }
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log('[POST] ~ Add Sale')
+            console.log(data)
+        })
+    }
+
     const submit = (event: any) => {
         event.preventDefault()
         console.log(form)
+        
+        // Chama a requisição
+        // addSale(form)
     }
 
     return (
