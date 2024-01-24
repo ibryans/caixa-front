@@ -1,4 +1,6 @@
+import axios from "axios"
 import { useState } from "react"
+import { useQuery } from "react-query"
 import { useNavigate } from "react-router-dom"
 
 
@@ -22,6 +24,16 @@ export default function Login() {
     const submit = (event: any) => {
         event.preventDefault()
         console.log(form)
+        
+        // React Query
+        // const { data } = useQuery('login', async () => {
+        //     const response = await axios.post('http://localhost:3000/login', form)
+        //     return response.data;
+        // })
+
+        // console.log('[POST] Login submitted')
+        // console.log(data)
+
         navigate("/home")
     }
 

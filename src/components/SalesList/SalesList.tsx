@@ -1,63 +1,60 @@
-import { useEffect, useState } from "react"
-import Sale from "../../models/Sale"
+import axios from "axios"
+import { useQuery } from "react-query"
 
-export default function SalesList() {
+interface Sale {
+    id: number,
+    user_id: number,
+    payment_method_id: number,
+    description: string,
+    price: number,
+    created_at: Date,
+}
+
+interface PaymentMethod {
+    id: number,
+    description: string
+}
+
+export function SalesList() {
 
     // URL da api
-    const url = '/sales'
-    const [sales, setSales] = useState<Sale[]>([])
+    const url = 'http://localhost:3000'
 
     // Chamando a requisição de lista de vendas
-    useEffect(() => {
-        /*fetch(url, { method: 'GET' })
-            .then((response => response.json()))
-            .then((data) => {*/
+    const { data: sales, isFetching: salesLoading } = useQuery<Sale[]>('sales', async () => {
+        const response = await axios.get(`${url}/sales`)
+        console.log('⚡ [GET] ~ Sales List')
+        return response.data
+    }, {
+        refetchInterval: 1000 * 60 // 1 minuto
+    })
 
-                // Setando dados mockados
-                const data = [
-                    {
-                        id: 1,
-                        description: 'Impressão',
-                        totalPrice: 2.5,
-                        date: new Date(),
-                        paymentMethod: "Dinheiro"
-                    },
-                    {
-                        id: 2,
-                        description: '',
-                        totalPrice: 0.5,
-                        date: new Date(),
-                        paymentMethod: "Cartão de Débito"
-                    },
-                    {
-                        id: 3,
-                        description: '',
-                        totalPrice: 15,
-                        date: new Date(),
-                        paymentMethod: "Pix"
-                    }
-                ]
-
-                setSales(data)
-
-                console.log('⚡ [GET] ~ Sales List')
-                console.log(data)
-            }, [])
-            /*.catch((error) => {
-                console.error(error.message)
-            })
-    })*/
+    // Pegando os méteodos de pagamento
+    const { data: payment_methods, isFetching: paymentMethosLoading } = useQuery<PaymentMethod[]>('payment_methods', async () => {
+        const response = await axios.get(`${url}/payment-method`)
+        console.log('⚡ [GET] ~ Payment Methods List')
+        return response.data
+    }, {
+        refetchOnWindowFocus: false
+    })
 
     return (
         <div className="p-2">
-            {sales.map((sale) => (
+
+            { (salesLoading || paymentMethosLoading) && 
+                <div className="d-flex justify-content-center">
+                    <div className="spinner-border m-3" role="status"/>
+                </div>
+            }
+
+            {sales?.map((sale) => (
                 <div key={`sale-${sale.id}`} className="m-2 row card">
                     <div className="card-body">
                         <h5 className="card-title d-flex">
-                            <b>R$ {sale.totalPrice?.toFixed(2)}</b>
+                            <b>R$ {sale.price.toFixed(2)}</b>
                         </h5>
                         <h6 className="card-subtitle text-secondary">
-                            {sale.paymentMethod}
+                            { payment_methods?.find((p) => p.id == sale.payment_method_id)?.description}
                         </h6>
                         <p className="card-text mt-2" id={`sale-${sale.id}-itens`}>
                             <span> {sale.description} </span>

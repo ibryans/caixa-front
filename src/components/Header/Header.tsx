@@ -3,7 +3,7 @@ import accountLogo from '../../assets/papelaria.jpeg'
 import { useState } from 'react'
 
 
-function Header() {
+export function Header() {
 
 	const [user, setUser] = useState({
 		name: 'Papelaria R.A Tech',

@@ -2,7 +2,7 @@ import { useState } from "react"
 import { CurrencyInput } from "react-currency-mask"
 import Sale from "../../models/Sale"
 
-export default function AddSale() {
+export function AddSale() {
 
     const [form, setForm] = useState({
         totalPrice: 0,

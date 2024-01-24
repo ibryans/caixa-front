@@ -1,4 +1,4 @@
-export default function Menu() {
+export function Menu() {
 
     return (
         <ul className="nav nav-underline justify-content-center mt-4">
