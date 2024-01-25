@@ -28,7 +28,10 @@ export function SalesList() {
 
     // Chamando a requisição de lista de vendas
     const { data: sales, isFetching: salesLoading } = useQuery<Sale[]>('sales', async () => {
-        const response = await axios.get(`${url}/sales`, reqConfig)
+        const logged = localStorage.getItem('loggedUser');
+        let user;
+        if (logged) user = JSON.parse(logged)
+        const response = await axios.get(`${url}/sales?user=${user.id}`, reqConfig)
         console.log('⚡ [GET] ~ Sales List')
         return response.data
     }, {
