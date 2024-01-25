@@ -15,6 +15,12 @@ interface PaymentMethod {
     description: string
 }
 
+const reqConfig = { 
+    headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+    }
+}
+
 export function SalesList() {
 
     // URL da api
@@ -22,7 +28,7 @@ export function SalesList() {
 
     // Chamando a requisição de lista de vendas
     const { data: sales, isFetching: salesLoading } = useQuery<Sale[]>('sales', async () => {
-        const response = await axios.get(`${url}/sales`)
+        const response = await axios.get(`${url}/sales`, reqConfig)
         console.log('⚡ [GET] ~ Sales List')
         return response.data
     }, {
@@ -31,7 +37,7 @@ export function SalesList() {
 
     // Pegando os méteodos de pagamento
     const { data: payment_methods, isFetching: paymentMethosLoading } = useQuery<PaymentMethod[]>('payment_methods', async () => {
-        const response = await axios.get(`${url}/payment-method`)
+        const response = await axios.get(`${url}/payment-method`, reqConfig)
         console.log('⚡ [GET] ~ Payment Methods List')
         return response.data
     }, {

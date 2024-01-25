@@ -23,7 +23,7 @@ export default function Login() {
         ).then(res => {
             const { accessToken } = res.data;
             localStorage.setItem('accessToken', accessToken)
-            navigate("/home")
+            navigate("/")
         }).catch(err => {
             setError(err.response.data.message)
         })
