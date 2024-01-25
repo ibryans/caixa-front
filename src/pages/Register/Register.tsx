@@ -1,30 +1,39 @@
+import axios from "axios";
 import { useState } from "react"
+import { SubmitHandler, useForm } from "react-hook-form"
+import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom"
+
+type RegisterInputs = {
+    name: string;
+    document: string;
+    email: string;
+    password: string;
+}
 
 export default function Register() {
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const [error, setError] = useState([]);
+    const { register, handleSubmit } = useForm<RegisterInputs>();
 
-    const [form, setForm] = useState({
-        name: "",
-        document: "",
-        email: "",
-        password: "",
-        phone: ""
+    // Requisição de cadastro
+    const registerMutation = useMutation(async (data: RegisterInputs) => { 
+        return await axios.post(
+            'http://localhost:3000/users', data
+        ).then(() => {
+            navigate('/login')
+            setError([])
+        }).catch(err => {
+            setError(err.response.data.message)
+        })
     })
 
-    const changeForm = (event: any) => {
-        const {name, value} = event.target
-        setForm((prevForm) => ({
-           ...prevForm,
-           [name]: value 
-        }))
-    }
-
-    const submit = (event: any) => {
-        event.preventDefault()
-        console.log(form)
-        navigate("/login")
+    // Evento de submit do formulário (chama a req)
+    const submit: SubmitHandler<RegisterInputs> = (data: RegisterInputs) => {
+        console.log('[REGISTER] ~ Conteúdo do formulário')
+        console.log(data)
+        registerMutation.mutate(data)
     }
 
     return (
@@ -35,11 +44,11 @@ export default function Register() {
                         <b>Sistema de Caixa</b>
                     </h1>
                     
-                    <form onSubmit={submit}>
+                    <form onSubmit={handleSubmit(submit)}>
 
                         <div className="pt-2">
                             <input
-                                onChange={changeForm}
+                                {...register("name")} 
                                 name="name"
                                 type="text"
                                 className="form-control"
@@ -48,7 +57,7 @@ export default function Register() {
 
                         <div className="pt-2">
                             <input
-                                onChange={changeForm}
+                                {...register("document", { required: true })}
                                 name="document"
                                 type="text"
                                 className="form-control"
@@ -57,29 +66,28 @@ export default function Register() {
 
                         <div className="pt-2">
                             <input
-                                onChange={changeForm}
-                                name="phone"
-                                type="tel"
-                                className="form-control"
-                                placeholder="Telefone"/>
-                        </div>
-
-                        <div className="pt-2">
-                            <input
-                                onChange={changeForm}
+                                {...register("email", { required: true })}
                                 name="email"
                                 type="email"
                                 className="form-control"
                                 placeholder="E-mail"/>
                         </div>
                         
-                        <div className="pt-2 mb-4">
+                        <div className="pt-2">
                             <input
-                                onChange={changeForm}
+                                {...register("password", { required: true })}
                                 name="password"
                                 type="password"
                                 className="form-control"
                                 placeholder="Senha"/>
+                        </div>
+
+                        <div className="pt-2 pb-4">
+                            {error.length > 0 && error.map(e => (
+                                <small key={e} className="text-danger">
+                                    { e } <br/>
+                                </small>
+                            ))}
                         </div>
 
                         <div className="d-grid gap-2 mb-5">
