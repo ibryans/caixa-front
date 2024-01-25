@@ -1,44 +1,51 @@
+import axios from "axios";
 import { useState } from "react"
 import { CurrencyInput } from "react-currency-mask"
-import Sale from "../../models/Sale"
+import { useForm } from "react-hook-form";
+import { useMutation, useQueryClient } from "react-query";
+
+type SaleInputs = {
+    user_id: number;
+    payment_method_id: number;
+    price: number;
+    description: string;
+}
+
+const reqConfig = {
+    headers: {
+        Authorization: `bearer ${localStorage.getItem('accessToken')}`
+    }
+}
 
 export function AddSale() {
 
-    const [form, setForm] = useState({
-        totalPrice: 0,
-        paymentMethod: '',
-        description: ''
-    })
+    const { register, handleSubmit, setValue } = useForm<SaleInputs>();
+    const [error, setError] = useState(null)
 
-    const changeForm = (event: any) => {
-        const {name, value} = event.target
-        setForm((prevForm) => ({
-           ...prevForm,
-           [name]: value 
-        }))
-    }
+    const queryClient = useQueryClient()
 
-    const addSale = async (value: Sale) => {
-        await fetch('',{
-            method: 'POST',
-            body: JSON.stringify(value),
-            headers: {
-                // adicionar o id do usuário, talvez, pra authentication
-            }
+    // Requisição que adiciona uma venda
+    const saleMutation = useMutation((data: any) => 
+        axios.post('http://localhost:3000/sales', data, reqConfig)
+        .then(res => { 
+            console.log(res.data)
+            queryClient.invalidateQueries('sales')
         })
-        .then((response) => response.json())
-        .then((data) => {
-            console.log('[POST] ~ Add Sale')
-            console.log(data)
-        })
-    }
+        .catch(err => { console.log(err.response) }))
 
-    const submit = (event: any) => {
-        event.preventDefault()
-        console.log(form)
-        
-        // Chama a requisição
-        // addSale(form)
+    // Evento de submit (chama a req)
+    const submit = (data: any) => {
+        const logged = localStorage.getItem('loggedUser');
+        let user;
+        if (logged) user = JSON.parse(logged)
+
+        const sale = { 
+            ...data,
+            payment_method_id: +data.payment_method_id,
+            user_id: user.id
+        }
+
+        saleMutation.mutate(sale);
     }
 
     return (
@@ -53,32 +60,31 @@ export function AddSale() {
                     </span>
 
                     <CurrencyInput
-                        onChangeValue={(_, original) =>{
-                            setForm((prevForm) => ({
-                                ...prevForm,
-                                totalPrice: original
-                             }))
-                        }}
+                        onChangeValue={(_, price) => setValue('price', +price)}
                         hideSymbol={true}
                         InputElement={ <input className="form-control" placeholder="Valor"/> }
                     />
                 </div>
+
+                {/* TODO: Chamar a requisição de métodos de pagamento e substituir o select/options */}
                 <div className="col">
                     <select
-                        onChange={changeForm}
+                        {...register("payment_method_id")}
                         name="paymentMethod" 
                         className="form-select" 
                         aria-label="Método de pagamento"
                         defaultValue={""}>
-                        <option value="" disabled>Pagamento</option>
-                        <option value="Dinheiro">Dinheiro</option>
-                        <option value="Cartão">Cartão</option>
-                        <option value="Pix">Pix</option>
+                        <option value="0" disabled>Pagamento</option>
+                        <option value={"1"}>Dinheiro</option>
+                        <option value={"2"}>Pix</option>
+                        <option value={"3"}>Cartão de Crédito</option>
+                        <option value={"4"}>Cartão de Débito</option>
                     </select>
                 </div>
+
                 <div className="col">
                     <input 
-                        onChange={changeForm}
+                        {...register("description")}
                         name="description"
                         type="text" 
                         className="form-control" 
@@ -87,7 +93,7 @@ export function AddSale() {
                 </div>
             </form>
             <div className="d-grid gap-2 p-3">
-                <button onClick={submit} className="btn btn-primary" type="button">
+                <button onClick={handleSubmit(submit)} className="btn btn-primary" type="button">
                     <i className="bi bi-plus-circle p-2"></i>
                     Adicionar
                 </button>
