@@ -21,8 +21,9 @@ export default function Login() {
             'http://localhost:3000/auth/login', 
             credentials
         ).then(res => {
-            const { accessToken } = res.data;
+            const { accessToken, user } = res.data;
             localStorage.setItem('accessToken', accessToken)
+            localStorage.setItem('loggedUser', JSON.stringify(user))
             navigate("/")
         }).catch(err => {
             setError(err.response.data.message)
