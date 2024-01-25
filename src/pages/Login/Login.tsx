@@ -1,41 +1,36 @@
 import axios from "axios"
 import { useState } from "react"
-import { useQuery } from "react-query"
+import { SubmitHandler, useForm } from "react-hook-form"
+import { useMutation } from "react-query"
 import { useNavigate } from "react-router-dom"
 
+type LoginInputs = {
+    email: string;
+    password: string;
+}
 
 export default function Login() {
 
     const navigate = useNavigate()
+    const [error, setError] = useState(null);
+    const { register, handleSubmit } = useForm<LoginInputs>();
 
-    const [form, setForm] = useState({
-        email: "",
-        password: "",
+    // Requisição de login
+    const loginMutation = useMutation(async (credentials: LoginInputs) => {
+        return await axios.post(
+            'http://localhost:3000/auth/login', 
+            credentials
+        ).then(res => {
+            const { accessToken } = res.data;
+            localStorage.setItem('accessToken', accessToken)
+            navigate("/home")
+        }).catch(err => {
+            setError(err.response.data.message)
+        })
     })
-
-    const changeForm = (event: any) => {
-        const {name, value} = event.target
-        setForm((prevForm) => ({
-           ...prevForm,
-           [name]: value 
-        }))
-    }
-
-    const submit = (event: any) => {
-        event.preventDefault()
-        console.log(form)
-        
-        // React Query
-        // const { data } = useQuery('login', async () => {
-        //     const response = await axios.post('http://localhost:3000/login', form)
-        //     return response.data;
-        // })
-
-        // console.log('[POST] Login submitted')
-        // console.log(data)
-
-        navigate("/home")
-    }
+    
+    // Evento de submit (chama a req)
+    const submit: SubmitHandler<LoginInputs> = (data: LoginInputs) => loginMutation.mutate(data)
 
     return (
         <div className="container">
@@ -46,31 +41,42 @@ export default function Login() {
                         <b>Controle de Caixa</b>
                     </h1>
                     
-                    <form onSubmit={submit}>
+                    <form onSubmit={handleSubmit(submit)}>
 
                         <div className="pt-2">
                             <input
-                                onChange={changeForm}
+                                {...register("email", { required: true })}
                                 name="email"
                                 type="email"
                                 className="form-control"
                                 placeholder="E-mail"/>
                         </div>
                         
-                        <div className="pt-2 pb-4">
+                        <div className="pt-2">
                             <input
-                                onChange={changeForm}
+                                {...register("password", { required: true })}
                                 name="password"
                                 type="password"
                                 className="form-control"
                                 placeholder="Senha"/>
                         </div>
 
+                        <div className="pt-2 pb-4">
+                            {error && ( 
+                                <small className="text-danger">
+                                    { error }
+                                </small>
+                            )}
+                        </div>
+
                         <div className="d-grid gap-2">
                             <button 
                                 type="submit"
                                 className="btn btn-outline-success btn-block">
-                                Entrar
+                                {loginMutation.isLoading
+                                    ? <div className="spinner-border spinner-border-sm" role="status"/>
+                                    : 'Entrar'
+                                }
                             </button>
                         </div>
                         
