@@ -1,25 +1,8 @@
 import axios from "axios"
 import { useQuery } from "react-query"
-
-interface Sale {
-    id: number,
-    user_id: number,
-    payment_method_id: number,
-    description: string,
-    price: number,
-    created_at: Date,
-}
-
-interface PaymentMethod {
-    id: number,
-    description: string
-}
-
-const reqConfig = { 
-    headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`
-    }
-}
+import { Sale } from "../../models/Sales";
+import { reqConfig } from "../../services/queryClient";
+import { PaymentMethod } from "../../models/PaymentMethods";
 
 export function SalesList() {
 
@@ -28,8 +11,8 @@ export function SalesList() {
 
     // Chamando a requisição de lista de vendas
     const { data: sales, isFetching: salesLoading } = useQuery<Sale[]>('sales', async () => {
-        const logged = localStorage.getItem('loggedUser');
         let user;
+        const logged = localStorage.getItem('loggedUser');
         if (logged) user = JSON.parse(logged)
         const response = await axios.get(`${url}/sales?user=${user.id}`, reqConfig)
         console.log('⚡ [GET] ~ Sales List')

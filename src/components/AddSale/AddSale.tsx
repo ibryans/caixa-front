@@ -2,41 +2,40 @@ import axios from "axios";
 import { useState } from "react"
 import { CurrencyInput } from "react-currency-mask"
 import { useForm } from "react-hook-form";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import { SaleInputs } from "../../models/Sales";
+import { PaymentMethod } from "../../models/PaymentMethods";
+import { reqConfig } from "../../services/queryClient";
 
-type SaleInputs = {
-    user_id: number;
-    payment_method_id: number;
-    price: number;
-    description: string;
-}
-
-const reqConfig = {
-    headers: {
-        Authorization: `bearer ${localStorage.getItem('accessToken')}`
-    }
-}
 
 export function AddSale() {
 
     const { register, handleSubmit, setValue } = useForm<SaleInputs>();
-    const [error, setError] = useState(null)
-
+    // const [error, setError] = useState(null)
     const queryClient = useQueryClient()
 
+    // Requisição para métodos de pagamento
+    const { data: payment_methods } = useQuery<PaymentMethod[]>('payment_methods', async () => {
+        const response = await axios.get('http://localhost:3000/payment-method', reqConfig)
+        return response.data
+    })
+
     // Requisição que adiciona uma venda
-    const saleMutation = useMutation((data: any) => 
-        axios.post('http://localhost:3000/sales', data, reqConfig)
-        .then(res => { 
-            console.log(res.data)
-            queryClient.invalidateQueries('sales')
-        })
-        .catch(err => { console.log(err.response) }))
+    const saleMutation = useMutation((data: any) => axios.post(
+        'http://localhost:3000/sales', 
+        data, 
+        reqConfig
+    ).then(res => { 
+        console.log(res.data)
+        queryClient.invalidateQueries('sales')
+    }).catch(err => { 
+        console.log(err.response) 
+    }))
 
     // Evento de submit (chama a req)
     const submit = (data: any) => {
-        const logged = localStorage.getItem('loggedUser');
         let user;
+        const logged = localStorage.getItem('loggedUser');
         if (logged) user = JSON.parse(logged)
 
         const sale = { 
@@ -44,9 +43,10 @@ export function AddSale() {
             payment_method_id: +data.payment_method_id,
             user_id: user.id
         }
-
         saleMutation.mutate(sale);
+        console.log('⚡ [POST] ~ Add Sale')
     }
+
 
     return (
         <div className="bg-white card m-3">
@@ -66,19 +66,17 @@ export function AddSale() {
                     />
                 </div>
 
-                {/* TODO: Chamar a requisição de métodos de pagamento e substituir o select/options */}
                 <div className="col">
                     <select
                         {...register("payment_method_id")}
-                        name="paymentMethod" 
                         className="form-select" 
                         aria-label="Método de pagamento"
-                        defaultValue={""}>
-                        <option value="0" disabled>Pagamento</option>
-                        <option value={"1"}>Dinheiro</option>
-                        <option value={"2"}>Pix</option>
-                        <option value={"3"}>Cartão de Crédito</option>
-                        <option value={"4"}>Cartão de Débito</option>
+                        placeholder="Método de pagamento">
+                        {payment_methods?.map((method: PaymentMethod) => (
+                            <option key={method.id} value={+method.id}>
+                                { method.description }
+                            </option>
+                        ))}
                     </select>
                 </div>
 
