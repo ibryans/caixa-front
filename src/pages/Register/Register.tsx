@@ -1,8 +1,8 @@
-import axios from "axios";
 import { useState } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom"
+import axios from "axios";
 
 type RegisterInputs = {
     name: string;
@@ -19,14 +19,14 @@ export default function Register() {
 
     // Requisição de cadastro
     const registerMutation = useMutation(async (data: RegisterInputs) => { 
-        return await axios.post(
-            'http://localhost:3000/users', data
-        ).then(() => {
-            navigate('/login')
-            setError([])
-        }).catch(err => {
-            setError(err.response.data.message)
-        })
+        return await axios.post('localhost:3000/users', data)
+            .then(() => {
+                navigate('/login')
+                setError([])
+            })
+            .catch(err => {
+                setError(err.response.data.message)
+            })
     })
 
     // Evento de submit do formulário (chama a req)
