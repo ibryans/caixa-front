@@ -7,12 +7,11 @@ import Register from './pages/Register/Register.tsx'
 import Home from './pages/Home/Home.tsx'
 import { QueryClient, QueryClientProvider } from 'react-query'
 
-const isLogged = localStorage.getItem('accessToken')
 
 const router = createBrowserRouter([
   {
     path: '',
-    element: isLogged ? <Home/> : <Login/>
+    element: localStorage.getItem('accessToken') ? <Home/> : <Login/>
   },
   {
     path: 'login',
