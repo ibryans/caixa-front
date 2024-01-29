@@ -1,8 +1,8 @@
-import axios from "axios"
 import { useState } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { useMutation } from "react-query"
 import { useNavigate } from "react-router-dom"
+import axios from "axios"
 
 type LoginInputs = {
     email: string;
@@ -17,17 +17,16 @@ export default function Login() {
 
     // Requisição de login
     const loginMutation = useMutation(async (credentials: LoginInputs) => {
-        return await axios.post(
-            'http://localhost:3000/auth/login', 
-            credentials
-        ).then(res => {
-            const { accessToken, user } = res.data;
-            localStorage.setItem('accessToken', accessToken)
-            localStorage.setItem('loggedUser', JSON.stringify(user))
-            navigate("/")
-        }).catch(err => {
-            setError(err.response.data.message)
-        })
+        return await axios.post('http://localhost:3000/auth/login', credentials)
+            .then(res => {
+                const { accessToken, user } = res.data;
+                localStorage.setItem('accessToken', accessToken)
+                localStorage.setItem('loggedUser', JSON.stringify(user))
+                window.location.reload();
+            })
+            .catch(err => {
+                setError(err.response.data.message)
+            })
     })
     
     // Evento de submit (chama a req)

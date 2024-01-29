@@ -1,21 +1,17 @@
-import axios from "axios"
 import { useQuery } from "react-query"
 import { Sale } from "../../models/Sales";
-import { reqConfig } from "../../services/queryClient";
 import { PaymentMethod } from "../../models/PaymentMethods";
+import { api } from "../../services/api";
+import './SalesList.css'
 
 export function SalesList() {
-
-    // URL da api
-    const url = 'http://localhost:3000'
 
     // Chamando a requisição de lista de vendas
     const { data: sales, isFetching: salesLoading } = useQuery<Sale[]>('sales', async () => {
         let user;
         const logged = localStorage.getItem('loggedUser');
         if (logged) user = JSON.parse(logged)
-        const response = await axios.get(`${url}/sales?user=${user.id}`, reqConfig)
-        console.log('⚡ [GET] ~ Sales List')
+        const response = await api.get(`/sales?user=${user.id}`)
         return response.data
     }, {
         refetchInterval: 1000 * 60 // 1 minuto
@@ -23,8 +19,7 @@ export function SalesList() {
 
     // Pegando os méteodos de pagamento
     const { data: payment_methods, isFetching: paymentMethosLoading } = useQuery<PaymentMethod[]>('payment_methods', async () => {
-        const response = await axios.get(`${url}/payment-method`, reqConfig)
-        console.log('⚡ [GET] ~ Payment Methods List')
+        const response = await api.get(`/payment-method`)
         return response.data
     }, {
         refetchOnWindowFocus: false
@@ -33,14 +28,24 @@ export function SalesList() {
     return (
         <div className="p-2">
 
-            { (salesLoading || paymentMethosLoading) && 
-                <div className="d-flex justify-content-center">
-                    <div className="spinner-border m-3" role="status"/>
+            { (salesLoading) && Array.from({length: 5}, (_,i) => (
+                <div key={i} className="m-2 row card placholder-glow fade-in">
+                    <div className="card-body">
+                        <h5 className="card-title placeholder-glow d-flex">
+                            <span className="placeholder col-2"></span>
+                        </h5>
+                        <h6 className="card-subtitle placeholder-glow text-secondary">
+                            <span className="placeholder col-2"></span>
+                        </h6>
+                        <p className="card-text mt-2 placeholder-glow">
+                            <span className="placeholder col-6"> </span>
+                        </p>
+                    </div>
                 </div>
-            }
+            ))}
 
-            {sales?.map((sale) => (
-                <div key={`sale-${sale.id}`} className="m-2 row card">
+            {(!salesLoading) && sales?.map((sale) => (
+                <div key={`sale-${sale.id}`} className="m-2 row card fade-in">
                     <div className="card-body">
                         <h5 className="card-title d-flex">
                             <b>R$ {sale.price.toFixed(2)}</b>
