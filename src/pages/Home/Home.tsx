@@ -9,7 +9,7 @@ export default function Home() {
     return (
         <>
             <Header/>
-            <div className="col-md-6 col-sm-12 offset-md-3">
+            <div className="col-sm-12 col-md-6 col-xxl-4 offset-md-3 offset-xxl-4">
                 <Menu/>
                 <div className="tab-content">
                     <div className="tab-pane container active" id="sales">

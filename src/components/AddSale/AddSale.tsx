@@ -1,36 +1,35 @@
-import axios from "axios";
 import { useState } from "react"
 import { CurrencyInput } from "react-currency-mask"
 import { useForm } from "react-hook-form";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { SaleInputs } from "../../models/Sales";
 import { PaymentMethod } from "../../models/PaymentMethods";
-import { reqConfig } from "../../services/queryClient";
+import { api } from "../../services/api";
 
 
 export function AddSale() {
 
+    // TODO: Adicionar um 'toast' para mostrar erro ou sucesso
+
     const { register, handleSubmit, setValue } = useForm<SaleInputs>();
-    // const [error, setError] = useState(null)
+    const [error, setError] = useState(null)
     const queryClient = useQueryClient()
 
     // Requisição para métodos de pagamento
     const { data: payment_methods } = useQuery<PaymentMethod[]>('payment_methods', async () => {
-        const response = await axios.get('http://localhost:3000/payment-method', reqConfig)
+        const response = await api.get('payment-method')
         return response.data
     })
 
     // Requisição que adiciona uma venda
-    const saleMutation = useMutation((data: any) => axios.post(
-        'http://localhost:3000/sales', 
-        data, 
-        reqConfig
-    ).then(res => { 
-        console.log(res.data)
-        queryClient.invalidateQueries('sales')
-    }).catch(err => { 
-        console.log(err.response) 
-    }))
+    const saleMutation = useMutation((data: any) => api.post('/sales', data)
+        .then(() => { 
+            queryClient.invalidateQueries('sales')
+            setError(null)
+        })
+        .catch(err => { 
+            setError(err.response.data.message)
+        }))
 
     // Evento de submit (chama a req)
     const submit = (data: any) => {
@@ -47,23 +46,24 @@ export function AddSale() {
         console.log('⚡ [POST] ~ Add Sale')
     }
 
-
     return (
         <div className="bg-white card m-3">
             <form className="row p-3 pb-0">
                 <div className="col-12 mb-3">
                     <h5>Nova venda</h5>
                 </div>
-                <div className="input-group col">
-                    <span className="input-group-text" id="basic-addon1">
-                        R$
-                    </span>
+                <div className="col">
+                    <div className="input-group">
+                        <span className="input-group-text" id="basic-addon1">
+                            R$
+                        </span>
 
-                    <CurrencyInput
-                        onChangeValue={(_, price) => setValue('price', +price)}
-                        hideSymbol={true}
-                        InputElement={ <input className="form-control" placeholder="Valor"/> }
-                    />
+                        <CurrencyInput
+                            onChangeValue={(_, price) => setValue('price', +price)}
+                            hideSymbol={true}
+                            InputElement={ <input className="form-control" placeholder="Valor"/> }
+                        />
+                    </div>
                 </div>
 
                 <div className="col">

@@ -12,7 +12,7 @@ export function Header() {
 
 	return (
 		<nav className="navbar bg-primary">
-			<div className="col-md-6 offset-md-3 col-sm-12 p-4 pt-3 pb-2 d-flex justify-content-between align-items-center text-white">
+			<div className="col-sm-12 col-md-6 col-xxl-4 offset-md-3 offset-xxl-4 p-4 pt-3 pb-2 d-flex justify-content-between align-items-center text-white">
 				<h4 className="d-flex justify-content-start">
 					Controle de Caixa
 				</h4>
