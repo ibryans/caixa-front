@@ -31,14 +31,22 @@ export default function Login() {
     const submit: SubmitHandler<LoginInputs> = (data: LoginInputs) => loginMutation.mutate(data)
 
     return (
-        <div className="bg-primary">
+        <div className="bg-light">
             <div className="container">
                 <div className="vh-100 d-flex justify-content-center align-items-center">
-                    <div className="card text-center p-5">
+                    <div className="card shadow-lg p-5">
 
-                        <h1 className="mb-5 text-center">
-                            <b>Controle de Caixa</b>
+                        <h1 className="text-center">
+                            <span style={{ fontWeight: 900 }}>
+                                CeF
+                            </span>
                         </h1>
+
+                        <h3 className="mb-5 text-center">
+                            <span style={{ fontWeight: 500 }}>
+                                Controle e Fluxo de Caixa
+                            </span>
+                        </h3>
                         
                         <form onSubmit={handleSubmit(submit)}>
 
@@ -81,16 +89,19 @@ export default function Login() {
                             
                         </form>
 
-                        <a href="/register" className="form-text pt-2 mb-4">
+                        <a href="/register" className="form-text pt-2 mb-4 text-center">
                             Esqueceu sua senha?
                         </a>
 
                         <div className="card-footer pt-2 p-0">
+                            <span className="form-text pt-2 mb-4">
+                                Ainda não possui uma conta?
+                            </span>
                             <a href="/register" className="text-decoration-none">
                                 <div className="mt-3 d-grid gap-2">
                                     <button     
-                                        className="btn btn-outline-primary btn-block">
-                                        Fazer Cadastro
+                                        className="btn btn-primary btn-block">
+                                        Criar conta
                                     </button>
                                 </div>
                             </a>

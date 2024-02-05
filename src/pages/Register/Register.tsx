@@ -37,15 +37,26 @@ export default function Register() {
     }
 
     return (
-        <div className="bg-primary">
+        <div className="bg-light">
             <div className="container">
                 <div className="vh-100 d-flex align-items-center justify-content-center">
-                    <div className="card text-center p-5">
-                        <h1 className="mb-5">
-                            <b>Sistema de Caixa</b>
+                    <div className="card shadow-lg p-5">
+                        
+                        <h1 className="text-center">
+                            <span style={{ fontWeight: 900 }}>
+                                CeF
+                            </span>
                         </h1>
+
+                        <h3 className="mb-5 text-center">
+                            <span style={{ fontWeight: 500 }}>
+                                Controle e Fluxo de Caixa
+                            </span>
+                        </h3>
                         
                         <form onSubmit={handleSubmit(submit)}>
+
+                            <p>Preencha as informações para criar uma nova conta</p>
 
                             <div className="pt-2">
                                 <input
@@ -53,7 +64,7 @@ export default function Register() {
                                     name="name"
                                     type="text"
                                     className="form-control"
-                                    placeholder="Nome do comércio"/>
+                                    placeholder="Nome fantasia"/>
                             </div>
 
                             <div className="pt-2">
@@ -62,7 +73,7 @@ export default function Register() {
                                     name="document"
                                     type="text"
                                     className="form-control"
-                                    placeholder="CPF / CNPJ"/>
+                                    placeholder="Documento (CPF ou CNPJ)"/>
                             </div>
 
                             <div className="pt-2">
@@ -95,7 +106,7 @@ export default function Register() {
                                 <button 
                                     type="submit"
                                     className="btn btn-outline-primary btn-block">
-                                    Fazer Cadastro
+                                    Criar conta
                                 </button>
                             </div>
                             
@@ -103,12 +114,12 @@ export default function Register() {
 
                         <div className="card-footer pt-3 p-0">
                             <span className="form-text pt-2 mb-4">
-                                Já possui um cadastro?
+                                Já possui uma conta?
                             </span>
                             <a href="/login" className="text-decoration-none">
                                 <div className="mt-3 d-grid gap-2">
                                     <button     
-                                        className="btn btn-outline-success btn-block">
+                                        className="btn btn-success btn-block">
                                         Entrar
                                     </button>
                                 </div>
