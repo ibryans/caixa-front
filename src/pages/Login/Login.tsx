@@ -22,7 +22,7 @@ export default function Login() {
                 const { accessToken, user } = res.data;
                 localStorage.setItem('accessToken', accessToken)
                 localStorage.setItem('loggedUser', JSON.stringify(user))
-                window.location.reload();
+                window.location.replace('/');
             })
             .catch(err => {
                 setError(err.response.data.message)
