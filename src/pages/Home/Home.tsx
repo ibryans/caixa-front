@@ -16,9 +16,9 @@ export default function Home() {
                         <AddSale/>
                         <SalesList/>
                     </div>
-                    <div className="tab-pane container" id="topay">
+                    {/* <div className="tab-pane container" id="topay">
                         <ToPayList/>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </>

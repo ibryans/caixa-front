@@ -7,7 +7,7 @@ export function Menu() {
                     Vendas
                 </a>
             </li>
-            <li className="nav-item">
+            {/* <li className="nav-item">
                 <a className="nav-link" data-bs-toggle="tab" href="#topay">
                     Fiados
                 </a>
@@ -16,7 +16,7 @@ export function Menu() {
                 <a className="nav-link" data-bs-toggle="tab" href="#">
                     Gastos
                 </a>
-            </li>
+            </li> */}
         </ul>
     )
 }
