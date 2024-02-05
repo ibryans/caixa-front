@@ -4,7 +4,7 @@ import { PaymentMethod } from "../../models/PaymentMethods";
 import { api } from "../../services/api";
 import './SalesList.css'
 import { useEffect, useState } from "react";
-import { DateFilter } from "../DateFilter";
+import { DateFilter } from "../DateFilter/DateFilter";
 
 export function SalesList() {
 
