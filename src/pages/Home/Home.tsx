@@ -2,7 +2,7 @@ import { AddSale } from "../../components/AddSale/AddSale"
 import Header from "../../components/Header/Header"
 import { Menu } from "../../components/Menu/Menu"
 import { SalesList } from "../../components/SalesList/SalesList"
-import ToPayList from "../../components/ToPayList/ToPayList"
+// import ToPayList from "../../components/ToPayList/ToPayList"
 
 export default function Home() {
 

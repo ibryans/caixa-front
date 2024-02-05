@@ -1,7 +1,6 @@
 import { useState } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { useMutation } from "react-query"
-import { useNavigate } from "react-router-dom"
 import axios from "axios"
 
 type LoginInputs = {
@@ -11,7 +10,6 @@ type LoginInputs = {
 
 export default function Login() {
 
-    const navigate = useNavigate()
     const [error, setError] = useState(null);
     const { register, handleSubmit } = useForm<LoginInputs>();
 

@@ -29,6 +29,7 @@ export function AddSale() {
         })
         .catch(err => { 
             setError(err.response.data.message)
+            console.log(error)
         }))
 
     // Evento de submit (chama a req)

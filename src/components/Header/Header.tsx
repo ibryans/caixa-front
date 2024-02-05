@@ -5,7 +5,7 @@ import { useState } from 'react'
 
 export function Header() {
 
-	const [user, setUser] = useState({
+	const [user] = useState({
 		name: 'Lorem Ipsum',
 		img: accountLogo
 	})
