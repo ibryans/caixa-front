@@ -6,7 +6,7 @@ import { useState } from 'react'
 export function Header() {
 
 	const [user, setUser] = useState({
-		name: 'Papelaria R.A Tech',
+		name: 'Lorem Ipsum',
 		img: accountLogo
 	})
 
@@ -23,14 +23,14 @@ export function Header() {
 				<h4 className="d-flex justify-content-start">
 					Controle de Caixa
 				</h4>
-				<div className='nav-item dropdown'>
+				<div className='nav-item dropdown btn-group'>
 					<a href="#" className="nav-link dropdown-toggle user-action p-1" role='button' data-bs-toggle="dropdown" aria-expanded="false">
 						<img src={user.img} className="avatar" />
 						<span className=''>{user.name}</span>
 					</a>
 					<ul className="dropdown-menu">
-						<li><a className="dropdown-item" href="#">Perfil</a></li>
-						<li><a className="dropdown-item" href="#">Configurações</a></li>
+						<li><a className="dropdown-item"> Perfil </a></li>
+						<li><a className="dropdown-item"> Configurações </a></li>
 						<li><hr className="dropdown-divider"/></li>
 						<li><a className="dropdown-item" onClick={() => logout()}>Sair</a></li>
 					</ul>
