@@ -15,6 +15,7 @@ export function SalesList() {
     
     // Sempre que mudar a data, invalidar a query
     useEffect(() => {
+        queryClient.removeQueries('sales')
         queryClient.invalidateQueries('sales')
     }, [date])
 
