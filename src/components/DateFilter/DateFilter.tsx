@@ -16,15 +16,16 @@ export function DateFilter(props: DateProps) {
 
     return (
         <div className="d-flex justify-content-between align-items-center mt-2 p-3">
-            <button className="btn btn-outline-dark" onClick={() => props.changeDate(-1)}>
+            <button className="btn btn-light" onClick={() => props.changeDate(-1)}>
                 <i className="bi bi-chevron-left"></i>
             </button>
             
-            <span className={isSelectedDateToday() ? "font-weight-bold text-primary" : ""}>
-                { new Date(props.date).toLocaleDateString('pt-br')} {isSelectedDateToday() ? ' (Hoje)' : ''}
+            <span className={isSelectedDateToday() ? "font-weight-bold" : ""}>
+                { new Date(props.date).toLocaleDateString('pt-br')} 
+                <b>{isSelectedDateToday() ? ' (Hoje)' : ''}</b>
             </span>
             
-            <button className="btn btn-outline-dark" onClick={() => props.changeDate(+1)} disabled={isSelectedDateToday()}>
+            <button className="btn btn-light" onClick={() => props.changeDate(+1)} disabled={isSelectedDateToday()}>
                 <i className="bi bi-chevron-right"></i>
             </button>
         </div>
